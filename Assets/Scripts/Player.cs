@@ -5,10 +5,6 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    private const string AnimationRun = "HorizontalMove";
-    private const string AnimationJump = "Jumping";
-    private const string AnimationDangeon = "Dangeon";
-
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _jumpForce = 8f;
     [SerializeField] private UnityEvent _getCoin;
@@ -20,6 +16,7 @@ public class Player : MonoBehaviour
     private float _horizontalMove = 0f;
     private bool _isFaceRight = true;
     private bool _isGround;
+    private bool _isEnemy;
 
     private void Start()
     {
@@ -35,16 +32,16 @@ public class Player : MonoBehaviour
         }
 
         _horizontalMove = Input.GetAxisRaw("Horizontal") * _speed;
-        _animator.SetFloat(AnimationRun, Mathf.Abs(_horizontalMove));
+        //_animator.SetFloat(AnimationRun, Mathf.Abs(_horizontalMove));
 
-        if (_isGround == true)
-        {
-            _animator.SetBool(AnimationJump, false);
-        }
-        else
-        {
-            _animator.SetBool(AnimationJump, true);
-        }
+        //if (_isGround == true)
+        //{
+        //    _animator.SetBool(AnimationJump, false);
+        //}
+        //else
+        //{
+        //    _animator.SetBool(AnimationJump, true);
+        //}
 
         if (_horizontalMove < 0 && _isFaceRight)
         {
@@ -60,6 +57,21 @@ public class Player : MonoBehaviour
     {
         Vector2 targetVelocity = new Vector2(_horizontalMove * 5f, _rigidbody2D.velocity.y);
         _rigidbody2D.velocity = targetVelocity;
+    }
+
+    public float GetHorizontalMove()
+    {
+        return _horizontalMove;
+    }
+
+    public bool GetiIsGround()
+    {
+        return _isGround;
+    }
+
+    public bool GetIsEnemy()
+    {
+        return _isEnemy;
     }
 
     private void Flip()
@@ -100,8 +112,13 @@ public class Player : MonoBehaviour
     {
         if(collision.collider.TryGetComponent(out Enemy enemy))
         {
-            _animator.SetTrigger(AnimationDangeon);
+            _isEnemy = true;
+            //_animator.SetTrigger(AnimationDangeon);
             _rigidbody2D.AddForce(transform.right * _dangeonForce, ForceMode2D.Impulse);
+        }
+        else
+        {
+            _isEnemy = false;
         }
     }
 

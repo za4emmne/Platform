@@ -10,19 +10,14 @@ public class CoinInstantiating : MonoBehaviour
 
     private void Start()
     {
-        Coin CloneCoin = Instantiate(_coin, transform.position, Quaternion.identity);
-    }
-
-    private void Update()
-    {
-       
+        Instantiate(_coin, transform.position, Quaternion.identity);
     }
 
     private IEnumerator Instantiate()
     {
-        var WaitForSecondInstatiateCoin = Random.Range(_minWaitSecondInstantiateCoin, _maxWaitSecondInstantiateCoin);
-        yield return WaitForSecondInstatiateCoin;
+        var Delay = Random.Range(_minWaitSecondInstantiateCoin, _maxWaitSecondInstantiateCoin);
+        yield return Delay;
 
-        Coin CloneCoin = Instantiate(_coin, transform.position, Quaternion.identity);
+        Instantiate(_coin, transform.position, Quaternion.identity);
     }
 }
