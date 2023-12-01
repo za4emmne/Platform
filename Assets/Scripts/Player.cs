@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _jumpForce = 8f;
-    [SerializeField] private UnityEvent _getCoin;
-    [SerializeField] private float _waitSecondToDestoryCoin = 0.3f;
     [SerializeField] private float _dangeonForce = 1f;
 
     private Rigidbody2D _rigidbody2D;
-    private Animator _animator;
     private float _horizontalMove = 0f;
     private bool _isFaceRight = true;
     private bool _isGround;
@@ -21,7 +17,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -32,16 +27,6 @@ public class Player : MonoBehaviour
         }
 
         _horizontalMove = Input.GetAxisRaw("Horizontal") * _speed;
-        //_animator.SetFloat(AnimationRun, Mathf.Abs(_horizontalMove));
-
-        //if (_isGround == true)
-        //{
-        //    _animator.SetBool(AnimationJump, false);
-        //}
-        //else
-        //{
-        //    _animator.SetBool(AnimationJump, true);
-        //}
 
         if (_horizontalMove < 0 && _isFaceRight)
         {
@@ -98,34 +83,17 @@ public class Player : MonoBehaviour
             _isGround = false;
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Coin coin))
-        {
-            _getCoin.Invoke();
-            StartCoroutine(DestroyCoin(coin.gameObject));
-        }
-    }
-
+   
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.TryGetComponent(out Enemy enemy))
         {
             _isEnemy = true;
-            //_animator.SetTrigger(AnimationDangeon);
             _rigidbody2D.AddForce(transform.right * _dangeonForce, ForceMode2D.Impulse);
         }
         else
         {
             _isEnemy = false;
         }
-    }
-
-    private IEnumerator DestroyCoin(GameObject coin)
-    {
-        var waitForSecond = new WaitForSeconds(_waitSecondToDestoryCoin);
-        yield return waitForSecond;
-        Destroy(coin);
     }
 }

@@ -17,7 +17,6 @@ public class PlayerAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _animator.SetFloat(AnimationRun, Mathf.Abs(_playerLink.GetHorizontalMove()));

@@ -12,12 +12,4 @@ public class CoinInstantiating : MonoBehaviour
     {
         Instantiate(_coin, transform.position, Quaternion.identity);
     }
-
-    private IEnumerator Instantiate()
-    {
-        var Delay = Random.Range(_minWaitSecondInstantiateCoin, _maxWaitSecondInstantiateCoin);
-        yield return Delay;
-
-        Instantiate(_coin, transform.position, Quaternion.identity);
-    }
 }
