@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         if(collision.collider.TryGetComponent(out Enemy enemy))
         {
             _isEnemy = true;
-            _rigidbody2D.AddForce(transform.right * _dangeonForce, ForceMode2D.Impulse);
+            //_rigidbody2D.AddForce(transform.right * _dangeonForce, ForceMode2D.Impulse);
         }
         else
         {

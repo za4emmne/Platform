@@ -2799,6 +2799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 869827457}
+  - component: {fileID: 869827460}
   - component: {fileID: 869827459}
   - component: {fileID: 869827456}
   - component: {fileID: 869827455}
@@ -2960,6 +2961,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1
   _jumpForce: 8
+  _dangeonForce: 4
+--- !u!114 &869827459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869827452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c70d3a8adcc854ca61f0e2d4900df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &869827460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869827452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75dcfbb3bc3d129449d56cc05c3ec96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _getCoin:
     m_PersistentCalls:
       m_Calls:
@@ -2976,19 +3002,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _waitSecondToDestoryCoin: 0.3
-  _dangeonForce: 4
---- !u!114 &869827459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869827452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14c70d3a8adcc854ca61f0e2d4900df8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &893189053
 GameObject:
   m_ObjectHideFlags: 0
