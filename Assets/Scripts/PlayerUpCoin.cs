@@ -8,11 +8,13 @@ public class PlayerUpCoin : MonoBehaviour
     [SerializeField] private UnityEvent _getCoin;
     [SerializeField] private float _waitSecondToDestoryCoin = 0.3f;
     [SerializeField] private float _waitSecondToReturnCoin;
+    [SerializeField] private int _countCoins = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Coin coin))
         {
+            _countCoins++;
             _getCoin.Invoke();
             StartCoroutine(DestroyCoin(coin.gameObject));
         }

@@ -7,6 +7,8 @@ public class PlayerAnimator : MonoBehaviour
     private const string AnimationRun = "HorizontalMove";
     private const string AnimationJump = "Jumping";
     private const string AnimationDangeon = "Dangeon";
+    private const string AnimationAttacked = "Attacked";
+    private bool _isDangeon = false;
 
     private Player _playerLink;
     private Animator _animator;
@@ -21,18 +23,23 @@ public class PlayerAnimator : MonoBehaviour
     {
         _animator.SetFloat(AnimationRun, Mathf.Abs(_playerLink.GetHorizontalMove()));
 
-        if (_playerLink.GetiIsGround() == true)
+        if (_playerLink.GetiIsGround() == false)
         {
-            _animator.SetBool(AnimationJump, false);
+            _animator.SetBool(AnimationJump, true);
         }
         else
         {
-            _animator.SetBool(AnimationJump, true);
+            _animator.SetBool(AnimationJump, false);
         }
 
         if(_playerLink.GetIsEnemy() == true)
         {
             _animator.SetTrigger(AnimationDangeon);
+        }
+
+        if (_playerLink.GetIsAttacked() == true)
+        {
+            _animator.SetTrigger(AnimationAttacked);
         }
     }
 }
