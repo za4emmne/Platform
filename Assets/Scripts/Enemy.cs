@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] _points;
     [SerializeField] private float _speed;
     [SerializeField] private Transform _player;
+    [SerializeField] private float _health = 1;
 
     private Animator _animator;
     private int _currentPoint;
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour
     private float _distance = 100f;
     private bool _isPlayerTrigger = false;
 
-    void Start()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
         _points = new Transform[_path.childCount];
@@ -30,12 +31,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right * GetLocalScale(), _distance, _layerMask);
-        Debug.DrawRay(transform.position, transform.right* GetLocalScale(), Color.red); 
+        Debug.DrawRay(transform.position, transform.right * GetLocalScale(), Color.red);
 
-        if(hit)
+        if (hit)
         {
             _isPlayerTrigger = true;
         }
@@ -51,7 +52,18 @@ public class Enemy : MonoBehaviour
         else
         {
             PursuePlayer();
-        }       
+        }
+    }
+
+    public void TakeDamage(float Damage)
+    {
+        _health = -Damage;
+
+        if (_health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 
     private void PursuePlayer()
@@ -70,11 +82,11 @@ public class Enemy : MonoBehaviour
     {
         int localScale = 1;
 
-        if(transform.localScale.x > 0 )
+        if (transform.localScale.x > 0)
         {
             return localScale = 1;
         }
-        else if(transform.localScale.x < 0)
+        else if (transform.localScale.x < 0)
         {
             return localScale = -1;
         }
@@ -109,14 +121,9 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.TryGetComponent(out Player player))
+        if (collision.collider.TryGetComponent(out Player player))
         {
             _animator.SetTrigger(AnimationAttacked);
-            
-            if(player.GetIsAttacked() == true) 
-            {
-                Destroy(this.gameObject);
-            }
         }
     }
 }

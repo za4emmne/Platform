@@ -8,7 +8,7 @@ public class PlayerAnimator : MonoBehaviour
     private const string AnimationJump = "Jumping";
     private const string AnimationDangeon = "Dangeon";
     private const string AnimationAttacked = "Attacked";
-    private bool _isDangeon = false;
+    //private bool _isDangeon = false;
 
     private Player _playerLink;
     private Animator _animator;

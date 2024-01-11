@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 1f;
-    [SerializeField] private float _jumpForce = 8f;
-    [SerializeField] private float _dangeonForce = 1f;
+    [SerializeField] private float _jumpForce = 8f;    
     [SerializeField] private float _health;
     [SerializeField] private int _damage = 1;
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private float _attackRange = 0.5f;
+    [SerializeField] private LayerMask _enemyLayer;
 
     private Rigidbody2D _rigidbody2D;
     private float _horizontalMove = 0f;
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
     private bool _isGround;
     private bool _isEnemy;
     private bool _isAttacked;
+    private float _dangeonForce;
 
     private void Start()
     {
@@ -42,6 +45,16 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            _isAttacked = true;
+            Attacked();
+        }
+        else
+        {
+            _isAttacked = false;
+        }
     }
 
     private void FixedUpdate()
@@ -50,21 +63,19 @@ public class Player : MonoBehaviour
         _rigidbody2D.velocity = targetVelocity;
     }
 
-    public bool GetIsAttacked()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
+    private void Attacked()
+    { 
+        Collider2D[] hitEnemy = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
+
+        foreach (var enemy in hitEnemy)
         {
-            return _isAttacked = true;
-        }
-        else
-        {
-            return _isAttacked = false;
+            enemy.GetComponent<Enemy>().TakeDamage(_damage);
         }
     }
 
-    public int GetDamage()
+    public void ChangeHealth(int changer)
     {
-        return _damage;
+        _health += changer;
     }
 
     public float GetHorizontalMove()
@@ -80,6 +91,21 @@ public class Player : MonoBehaviour
     public bool GetIsEnemy()
     {
         return _isEnemy;
+    }
+
+    public bool GetIsAttacked()
+    {
+        return _isAttacked;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_attackPoint == null)
+        {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 
     private void Flip()
@@ -114,7 +140,6 @@ public class Player : MonoBehaviour
         {
             _isEnemy = true;
             _health--;
-            //_rigidbody2D.AddForceAtPosition(Vector2.right, Vector2.up);
         }
         else
         {

@@ -11,13 +11,14 @@ public class PlayerAttacked : MonoBehaviour
         _playerLink = GetComponent<Player>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Enemy enemy) && Attaked())
-        {
-            _playerLink.GetDamage();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.TryGetComponent(out Enemy enemy) && Attaked())
+    //    {
+    //        Debug.Log("Attack");
+    //        _playerLink.GetDamage();
+    //    }
+    //}
 
     private bool Attaked()
     {
